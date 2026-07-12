@@ -1,0 +1,136 @@
+82026-07-08T21:53:22.186393+02:00 PC_NAME systemd-logind[183]: New seat seat0.wda
+2026-07-08T21:56:18.932594+02:00 PC_NAME groupadd[450]: group added to /etc/group: name=PC_NAME, GID=1000
+2026-07-08T21:56:18.935280+02:00 PC_NAME groupadd[450]: group added to /etc/gshadow: name=PC_NAME
+2026-07-08T21:56:18.935830+02:00 PC_NAME groupadd[450]: new group: name=PC_NAME, GID=1000
+2026-07-08T21:56:18.949391+02:00 PC_NAME useradd[455]: new user: name=PC_NAME, UID=1000, GID=1000, home=/home/PC_NAME, shell=/bin/bash, from=/dev/pts/0
+2026-07-08T21:56:36.271308+02:00 PC_NAME passwd[466]: pam_unix(passwd:chauthtok): password changed for PC_NAME
+2026-07-08T21:56:36.290844+02:00 PC_NAME gpasswd[473]: members of group users set by root to PC_NAME
+2026-07-08T21:56:36.300126+02:00 PC_NAME usermod[477]: add 'PC_NAME' to group 'adm'
+2026-07-08T21:56:36.300207+02:00 PC_NAME usermod[477]: add 'PC_NAME' to group 'cdrom'
+2026-07-08T21:56:36.300260+02:00 PC_NAME usermod[477]: add 'PC_NAME' to group 'sudo'
+2026-07-08T21:56:36.300317+02:00 PC_NAME usermod[477]: add 'PC_NAME' to group 'dip'
+2026-07-08T21:56:36.300368+02:00 PC_NAME usermod[477]: add 'PC_NAME' to group 'plugdev'
+2026-07-08T21:56:36.300412+02:00 PC_NAME usermod[477]: add 'PC_NAME' to shadow group 'adm'
+2026-07-08T21:56:36.300457+02:00 PC_NAME usermod[477]: add 'PC_NAME' to shadow group 'cdrom'
+2026-07-08T21:56:36.300477+02:00 PC_NAME usermod[477]: add 'PC_NAME' to shadow group 'sudo'
+2026-07-08T21:56:36.300520+02:00 PC_NAME usermod[477]: add 'PC_NAME' to shadow group 'dip'
+2026-07-08T21:56:36.300564+02:00 PC_NAME usermod[477]: add 'PC_NAME' to shadow group 'plugdev'
+2026-07-08T21:56:36.324896+02:00 PC_NAME su[496]: (to PC_NAME) root on pts/0
+2026-07-08T21:56:36.326144+02:00 PC_NAME su[496]: pam_unix(su:session): session opened for user PC_NAME(uid=1000) by (uid=0)
+2026-07-08T21:56:36.333656+02:00 PC_NAME systemd-logind[183]: New session 'c1' of user 'PC_NAME' with class 'user' and type 'tty'.
+2026-07-08T21:56:36.386555+02:00 PC_NAME (systemd): pam_unix(systemd-user:session): session opened for user PC_NAME(uid=1000) by PC_NAME(uid=0)
+2026-07-08T21:56:36.387343+02:00 PC_NAME systemd-logind[183]: New session 'c2' of user 'PC_NAME' with class 'manager' and type 'unspecified'.
+2026-07-08T21:56:36.522009+02:00 PC_NAME su[496]: pam_unix(su:session): session closed for user PC_NAME
+2026-07-08T21:56:36.524607+02:00 PC_NAME systemd-logind[183]: Session c1 logged out. Waiting for processes to exit.
+2026-07-08T21:56:36.525641+02:00 PC_NAME systemd-logind[183]: Removed session c1.
+2026-07-08T21:56:46.644438+02:00 PC_NAME systemd-logind[183]: Removed session c2.
+2026-07-08T21:56:46.644808+02:00 PC_NAME (sd-pam): pam_unix(systemd-user:session): session closed for user PC_NAME
+2026-07-08T21:56:55.221330+02:00 PC_NAME su[574]: (to PC_NAME) root on pts/0
+2026-07-08T21:56:55.221841+02:00 PC_NAME su[574]: pam_unix(su:session): session opened for user PC_NAME(uid=1000) by (uid=0)
+2026-07-08T21:56:55.228054+02:00 PC_NAME systemd-logind[183]: New session 'c3' of user 'PC_NAME' with class 'user' and type 'tty'.
+2026-07-08T21:56:55.284740+02:00 PC_NAME (systemd): pam_unix(systemd-user:session): session opened for user PC_NAME(uid=1000) by PC_NAME(uid=0)
+2026-07-08T21:56:55.285651+02:00 PC_NAME systemd-logind[183]: New session 'c4' of user 'PC_NAME' with class 'manager' and type 'unspecified'.
+2026-07-08T21:56:55.409522+02:00 PC_NAME su[574]: pam_unix(su:session): session closed for user PC_NAME
+2026-07-08T21:56:55.411325+02:00 PC_NAME systemd-logind[183]: Session c3 logged out. Waiting for processes to exit.
+2026-07-08T21:56:55.415175+02:00 PC_NAME su[615]: (to PC_NAME) root on pts/0
+2026-07-08T21:56:55.417002+02:00 PC_NAME systemd-logind[183]: Removed session c3.
+2026-07-08T21:56:55.417175+02:00 PC_NAME su[615]: pam_unix(su:session): session opened for user PC_NAME(uid=1000) by (uid=0)
+2026-07-08T21:56:55.426900+02:00 PC_NAME su[615]: pam_unix(su:session): session closed for user PC_NAME
+2026-07-08T21:56:55.428674+02:00 PC_NAME systemd-logind[183]: Session c5 logged out. Waiting for processes to exit.
+2026-07-08T21:56:55.432292+02:00 PC_NAME su[634]: (to PC_NAME) root on pts/0
+2026-07-08T21:56:55.432941+02:00 PC_NAME su[634]: pam_unix(su:session): session opened for user PC_NAME(uid=1000) by (uid=0)
+2026-07-08T21:56:55.434867+02:00 PC_NAME systemd-logind[183]: New session 'c6' of user 'PC_NAME' with class 'user' and type 'tty'.
+2026-07-08T21:56:55.440040+02:00 PC_NAME systemd-logind[183]: Removed session c5.
+2026-07-08T21:56:55.440931+02:00 PC_NAME su[634]: pam_unix(su:session): session closed for user PC_NAME
+2026-07-08T21:56:55.442292+02:00 PC_NAME systemd-logind[183]: Session c6 logged out. Waiting for processes to exit.
+2026-07-08T21:56:55.455944+02:00 PC_NAME systemd-logind[183]: Removed session c6.
+2026-07-08T21:56:55.691111+02:00 PC_NAME su[651]: (to PC_NAME) root on pts/0
+2026-07-08T21:56:55.691536+02:00 PC_NAME su[651]: pam_unix(su:session): session opened for user PC_NAME(uid=1000) by (uid=0)
+2026-07-08T21:56:55.693282+02:00 PC_NAME systemd-logind[183]: New session 'c7' of user 'PC_NAME' with class 'user' and type 'tty'.
+2026-07-08T21:56:55.987187+02:00 PC_NAME su[651]: pam_unix(su:session): session closed for user PC_NAME
+2026-07-08T21:56:55.989448+02:00 PC_NAME systemd-logind[183]: Session c7 logged out. Waiting for processes to exit.
+2026-07-08T21:56:55.990177+02:00 PC_NAME systemd-logind[183]: Removed session c7.
+2026-07-08T21:56:55.991904+02:00 PC_NAME su[690]: (to PC_NAME) root on pts/0
+2026-07-08T21:56:55.992443+02:00 PC_NAME su[690]: pam_unix(su:session): session opened for user PC_NAME(uid=1000) by (uid=0)
+2026-07-08T21:56:55.994309+02:00 PC_NAME systemd-logind[183]: New session 'c8' of user 'PC_NAME' with class 'user' and type 'tty'.
+2026-07-08T21:56:56.018093+02:00 PC_NAME su[690]: pam_unix(su:session): session closed for user PC_NAME
+2026-07-08T21:56:56.019861+02:00 PC_NAME systemd-logind[183]: Session c8 logged out. Waiting for processes to exit.
+2026-07-08T21:56:56.301555+02:00 PC_NAME login: pam_unix(login:session): session opened for user PC_NAME(uid=1000) by PC_NAME(uid=0)
+2026-07-08T21:56:56.303428+02:00 PC_NAME systemd-logind[183]: New session 'c9' of user 'PC_NAME' with class 'user' and type 'tty'.
+2026-07-08T21:56:56.457141+02:00 PC_NAME systemd-logind[183]: Removed session c8.
+2026-07-08T22:11:34.661848+02:00 PC_NAME systemd-logind[183]: The system will power off now!
+2026-07-08T22:11:34.684081+02:00 PC_NAME systemd-logind[183]: System is powering down.
+2026-07-08T22:11:34.690783+02:00 PC_NAME login: pam_unix(login:session): session closed for user PC_NAME
+2026-07-08T22:12:09.674594+02:00 PC_NAME systemd-logind[147]: New seat seat0.
+2026-07-08T22:12:10.698431+02:00 PC_NAME login: pam_unix(login:session): session opened for user PC_NAME(uid=1000) by PC_NAME(uid=0)
+2026-07-08T22:12:10.704425+02:00 PC_NAME systemd-logind[147]: New session 'c1' of user 'PC_NAME' with class 'user' and type 'tty'.
+2026-07-08T22:12:10.745032+02:00 PC_NAME (systemd): pam_unix(systemd-user:session): session opened for user PC_NAME(uid=1000) by PC_NAME(uid=0)
+2026-07-08T22:12:10.745863+02:00 PC_NAME systemd-logind[147]: New session 'c2' of user 'PC_NAME' with class 'manager' and type 'unspecified'.
+2026-07-08T22:15:50.763549+02:00 PC_NAME login: pam_unix(login:session): session opened for user root(uid=0) by root(uid=0)
+2026-07-08T22:15:50.770331+02:00 PC_NAME systemd-logind[147]: New session 'c3' of user 'root' with class 'user-early' and type 'tty'.
+2026-07-08T22:15:50.821826+02:00 PC_NAME (systemd): pam_unix(systemd-user:session): session opened for user root(uid=0) by root(uid=0)
+2026-07-08T22:15:50.822620+02:00 PC_NAME systemd-logind[147]: New session 'c4' of user 'root' with class 'manager-early' and type 'unspecified'.
+2026-07-08T22:15:50.976849+02:00 PC_NAME login: ROOT LOGIN ON pts/2
+2026-07-08T22:17:01.507289+02:00 PC_NAME CRON[819]: pam_unix(cron:session): session opened for user root(uid=0) by root(uid=0)
+2026-07-08T22:17:01.509239+02:00 PC_NAME CRON[819]: pam_unix(cron:session): session closed for user root
+2026-07-08T22:23:17.579544+02:00 PC_NAME unix_chkpwd[939]: password check failed for user (PC_NAME)
+2026-07-08T22:23:17.579907+02:00 PC_NAME su: pam_unix(su-l:auth): authentication failure; logname= uid=1000 euid=0 tty=/dev/pts/0 ruser=PC_NAME rhost=  user=PC_NAME
+2026-07-08T22:23:19.699813+02:00 PC_NAME su[937]: FAILED SU (to PC_NAME) PC_NAME on pts/0
+2026-07-08T22:34:56.936403+02:00 PC_NAME sudo: pam_unix(sudo:session): session opened for user root(uid=0) by (uid=1000)
+2026-07-08T22:34:56.939627+02:00 PC_NAME sudo: PC_NAME : TTY=/dev/pts/0 ; PWD=/var/log ; USER=root ; COMMAND=/usr/bin/apt install openssh-server
+2026-07-08T22:36:30.656307+02:00 PC_NAME sudo: pam_unix(sudo:session): session closed for user root
+2026-07-08T22:41:48.381137+02:00 PC_NAME sudo: pam_unix(sudo:session): session opened for user root(uid=0) by (uid=1000)
+2026-07-08T22:41:48.383158+02:00 PC_NAME sudo: PC_NAME : TTY=/dev/pts/0 ; PWD=/home/PC_NAME ; USER=root ; COMMAND=/usr/bin/apt install net-tools
+2026-07-08T22:41:49.728453+02:00 PC_NAME sudo: pam_unix(sudo:session): session closed for user root
+2026-07-08T22:43:57.739051+02:00 PC_NAME sshd[1806]: Server listening on 0.0.0.0 port 22.
+2026-07-08T22:43:57.739183+02:00 PC_NAME sshd[1806]: Server listening on :: port 22.
+2026-07-08T22:44:12.821472+02:00 PC_NAME unix_chkpwd[1811]: password check failed for user (PC_NAME)
+2026-07-08T22:44:12.821715+02:00 PC_NAME sshd-session[1809]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=100.10.100.10  user=PC_NAME
+2026-07-08T22:44:14.475529+02:00 PC_NAME sshd-session[1809]: Failed password for PC_NAME from 100.10.100.10 port 33272 ssh2
+2026-07-08T22:44:15.052513+02:00 PC_NAME sshd-session[1809]: Failed password for PC_NAME from 100.10.100.10 port 33272 ssh2
+2026-07-08T22:44:21.278733+02:00 PC_NAME unix_chkpwd[1812]: password check failed for user (PC_NAME)
+2026-07-08T22:44:22.899992+02:00 PC_NAME sshd-session[1809]: Failed password for PC_NAME from 100.10.100.10 port 33272 ssh2
+2026-07-08T22:44:23.495050+02:00 PC_NAME sshd-session[1809]: Connection closed by authenticating user PC_NAME 100.10.100.10 port 33272 [preauth]
+2026-07-08T22:44:23.495454+02:00 PC_NAME sshd-session[1809]: PAM 1 more authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=100.10.100.10  user=PC_NAME
+2026-07-08T23:02:20.001167+02:00 PC_NAME sshd-session[1900]: Invalid user SuperAdmin from 100.10.100.10 port 33396
+2026-07-08T23:02:21.428868+02:00 PC_NAME sshd-session[1900]: pam_unix(sshd:auth): check pass; user unknown
+2026-07-08T23:02:21.428976+02:00 PC_NAME sshd-session[1900]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=100.10.100.10 
+2026-07-08T23:02:23.359293+02:00 PC_NAME sshd-session[1900]: Failed password for invalid user SuperAdmin from 100.10.100.10 port 33396 ssh2
+2026-07-08T23:02:25.533828+02:00 PC_NAME sshd-session[1900]: pam_unix(sshd:auth): check pass; user unknown
+2026-07-08T23:02:27.359682+02:00 PC_NAME sshd-session[1900]: Failed password for invalid user SuperAdmin from 100.10.100.10 port 33396 ssh2
+2026-07-08T23:02:29.950001+02:00 PC_NAME sshd-session[1900]: Failed password for invalid user SuperAdmin from 100.10.100.10 port 33396 ssh2
+2026-07-08T23:02:29.959803+02:00 PC_NAME sshd-session[1900]: Connection closed by invalid user SuperAdmin 100.10.100.10 port 33396 [preauth]
+2026-07-08T23:02:29.960105+02:00 PC_NAME sshd-session[1900]: PAM 1 more authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=100.10.100.10 
+2026-07-08T23:02:41.126621+02:00 PC_NAME unix_chkpwd[1915]: password check failed for user (root)
+2026-07-08T23:02:41.126967+02:00 PC_NAME sshd-session[1913]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=100.10.100.10  user=root
+2026-07-08T23:02:43.023542+02:00 PC_NAME sshd-session[1913]: Failed password for root from 100.10.100.10 port 38768 ssh2
+2026-07-08T23:02:44.491923+02:00 PC_NAME unix_chkpwd[1916]: password check failed for user (root)
+2026-07-08T23:02:46.474572+02:00 PC_NAME sshd-session[1913]: Failed password for root from 100.10.100.10 port 38768 ssh2
+2026-07-08T23:02:48.963307+02:00 PC_NAME sshd-session[1913]: Failed password for root from 100.10.100.10 port 38768 ssh2
+2026-07-08T23:02:48.972105+02:00 PC_NAME sshd-session[1913]: Connection closed by authenticating user root 100.10.100.10 port 38768 [preauth]
+2026-07-08T23:02:48.972448+02:00 PC_NAME sshd-session[1913]: PAM 1 more authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=100.10.100.10  user=root
+2026-07-08T23:03:18.810931+02:00 PC_NAME unix_chkpwd[1941]: password check failed for user (root)
+2026-07-08T23:03:18.811286+02:00 PC_NAME sshd-session[1939]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=100.10.100.10  user=root
+2026-07-08T23:03:21.336803+02:00 PC_NAME sshd-session[1939]: Failed password for root from 100.10.100.10 port 54106 ssh2
+2026-07-08T23:03:24.945554+02:00 PC_NAME sshd-session[1939]: message repeated 2 times: [ Failed password for root from 100.10.100.10 port 54106 ssh2]
+2026-07-08T23:03:24.954499+02:00 PC_NAME sshd-session[1939]: Connection closed by authenticating user root 100.10.100.10 port 54106 [preauth]
+2026-07-08T23:15:01.961784+02:00 PC_NAME sudo: pam_unix(sudo:session): session opened for user root(uid=0) by (uid=1000)
+2026-07-08T23:15:01.965430+02:00 PC_NAME sudo: PC_NAME : TTY=/dev/pts/0 ; PWD=/home/PC_NAME/ssh-bruteforce-detector ; USER=root ; COMMAND=/usr/bin/cp /var/log/auth.log /home/PC_NAME/ssh-bruteforce-detector/test_auth.log
+[ Error reading test_auth.log: Permission denied ]
+2026-07-08T23:02:41.023542+02:00 PC_NAME sshd-session[1910]: Failed password for root from 100.10.100.10 port 38760 ssh2
+2026-07-08T23:02:42.023542+02:00 PC_NAME sshd-session[1911]: Failed password for root from 100.10.100.10 port 38761 ssh2
+2026-07-08T23:02:43.023542+02:00 PC_NAME sshd-session[1913]: Failed password for root from 100.10.100.10 port 38768 ssh2
+2026-07-08T23:02:44.023542+02:00 PC_NAME sshd-session[1914]: Failed password for root from 100.10.100.10 port 38769 ssh2
+2026-07-08T23:02:45.023542+02:00 PC_NAME sshd-session[1915]: Failed password for root from 100.10.100.10 port 38770 ssh2
+2026-07-08T23:02:46.023542+02:00 PC_NAME sshd-session[1916]: Failed password for root from 100.10.100.10 port 38771 ssh2
+2026-07-08T23:02:47.023542+02:00 PC_NAME sshd-session[1917]: Failed password for root from 100.10.100.10 port 38772 ssh2
+2026-07-08T23:03:00.023542+02:00 PC_NAME sshd-session[1950]: Accepted publickey for user1 from 193.169.2.101 port 40000 ssh2
+2026-07-08T23:05:10.023542+02:00 PC_NAME sshd-session[2000]: Failed password for SuperAdmin from 11.1.1.56 port 40123 ssh2
+2026-07-08T23:05:11.023542+02:00 PC_NAME sshd-session[2001]: Failed password for SuperAdmin from 11.1.1.56 port 40124 ssh2
+2026-07-08T23:05:12.023542+02:00 PC_NAME sshd-session[2002]: Failed password for SuperAdmin from 11.1.1.56 port 40125 ssh2
+2026-07-09T10:00:00.000000+02:00 PC_NAME sshd-session[999]: Failed password for invalid user SuperAdmin
+2026-07-09T10:00:00.000000+02:00 PC_NAME sshd-session[999]: Failed password for invalid user SuperAdmin
+2026-07-09T10:00:00.000000+02:00 PC_NAME sshd-session[999]: Failed password for invalid user SuperAdmin
+2026-07-09T10:00:00.000000+02:00 PC_NAME sshd-session[999]: Failed password for invalid user SuperAdmin
+2026-07-09T10:00:00.000000+02:00 PC_NAME sshd-session[999]: Failed password for invalid user SuperAdmin
+2026-07-09T10:00:00.000000+02:00 PC_NAME sshd-session[999]: Failed password for invalid user SuperAdmin
