@@ -1,3 +1,5 @@
+import sys
+
 TARGET = "Failed password"
 IP_dict ={}
 Exception = []
@@ -21,10 +23,10 @@ def ip_control(ip_):
         IP_dict[ip_] += 1
     
 
-def check_logs():
+def check_logs(path):
     while True:
         try:
-            logs = open_log(path = input("Logs path: "))
+            logs = open_log(path)
             break
         except FileNotFoundError:
             print("Bad path")
@@ -44,10 +46,12 @@ def sort(IP_dict):
     for key, value in sorted(IP_dict.items(), key=lambda item: item[1], reverse=True):
         if value > 5:
             print(f"IP: {key} | failed attempts: {value}")
+            for suspect_log in Exception:
+                print(f"Suspected line: ", suspect_log)
 
 
         
                      
-check_logs()
+check_logs(sys.argv[1])
 
 
