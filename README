@@ -1,0 +1,18 @@
+This project is coded for checking  Failed logs by finding "Failed password".
+The result is: if one IP had more than 5 failed logs, it will be displayed with amount of unsuccessful tries.
+If there were no IP the line from logs will be written to skipped lines which will be displazed and can be checked.
+
+How to run code:
+Usage: python3 main.py <path_to_log>
+
+How result supposed to look like:
+IP: 100.10.100.10 | failed attempts: 18
+IP: 200.20.200.20 | failed attempts: 7
+Suspected line:  2026-07-09T10:00:00.000000+02:00 PC_NAME sshd-session[999]: Failed password for invalid user SuperAdmin
+Suspected line:  2026-07-09T10:00:00.000000+02:00 PC_NAME sshd-session[999]: Failed password for invalid user SuperAdmin
+Suspected line:  2026-07-09T10:00:00.000000+02:00 PC_NAME sshd-session[999]: Failed password for invalid user SuperAdmin
+Suspected line:  2026-07-09T10:00:00.000000+02:00 PC_NAME sshd-session[999]: Failed password for invalid user SuperAdmin
+Suspected line:  2026-07-09T10:00:00.000000+02:00 PC_NAME sshd-session[999]: Failed password for invalid user SuperAdmin
+Suspected line:  2026-07-09T10:00:00.000000+02:00 PC_NAME sshd-session[999]: Failed password for invalid user SuperAdmin
+
+
