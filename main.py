@@ -2,7 +2,8 @@ import sys
 
 TARGET = "Failed password"
 IP_dict ={}
-Exception = []
+skipped_lines = []
+run_arg = sys.argv[1::]
 
 
 def open_log(path):
@@ -24,20 +25,17 @@ def ip_control(ip_):
     
 
 def check_logs(path):
-    while True:
-        try:
-            logs = open_log(path)
-            break
-        except FileNotFoundError:
-            print("Bad path")
-            
+    try:
+        logs = open_log(path)
+    except FileNotFoundError:
+        print("Bad path. Usage: python3 main.py <path_to_log>")
+        sys.exit()
             
     for row in logs:
         if TARGET in row:
             ip = get_ip(row.split())
             if  ip == None:
-                Exception.append(row)
-                pass
+                skipped_lines.append(row)
             else:
                 ip_control(ip)
     sort(IP_dict)
@@ -46,12 +44,17 @@ def sort(IP_dict):
     for key, value in sorted(IP_dict.items(), key=lambda item: item[1], reverse=True):
         if value > 5:
             print(f"IP: {key} | failed attempts: {value}")
-            for suspect_log in Exception:
-                print(f"Suspected line: ", suspect_log)
+    for suspect_log in skipped_lines:
+        print(f"Suspected line: ", suspect_log)
 
 
         
-                     
-check_logs(sys.argv[1])
+def start_checking():
+    if len(run_arg) != 1:
+        print("Usage: python3 main.py <path_to_log>")
+        sys.exit()
+    else:
+        check_logs(sys.argv[1])
 
+start_checking()
 
