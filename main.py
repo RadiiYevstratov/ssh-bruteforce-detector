@@ -1,9 +1,7 @@
 import sys
 
 TARGET = "Failed password"
-IP_dict ={}
-skipped_lines = []
-run_arg = sys.argv[1::]
+
 
 
 def open_log(path):
@@ -17,42 +15,50 @@ def get_ip(target_log):
     except ValueError:
         return None
 
-def ip_control(ip_):
-    if ip_ not in IP_dict:
-        IP_dict[ip_] = 1
-    else:
-        IP_dict[ip_] += 1
+
     
 
 def check_logs(path):
+    IP_dict ={}
+    skipped_lines = []
     try:
         logs = open_log(path)
-    except FileNotFoundError:
-        print("Bad path. Usage: python3 main.py <path_to_log>")
-        sys.exit()
+    except (FileNotFoundError) as e:
+        print(e)
+        sys.exit(1)
+    except (PermissionError) as e:
+        print(e)
+        sys.exit(1)
             
     for row in logs:
         if TARGET in row:
             ip = get_ip(row.split())
-            if  ip == None:
+            if  ip is None:
                 skipped_lines.append(row)
             else:
-                ip_control(ip)
-    sort(IP_dict)
+                ip_control(ip, IP_dict)
+    print_result(IP_dict, skipped_lines)
+    
 
-def sort(IP_dict):
+def ip_control(ip_, IP_dict):
+    if ip_ not in IP_dict:
+        IP_dict[ip_] = 1
+    else:
+        IP_dict[ip_] += 1
+
+def print_result(IP_dict, skipped_lines):
     for key, value in sorted(IP_dict.items(), key=lambda item: item[1], reverse=True):
         if value > 5:
             print(f"IP: {key} | failed attempts: {value}")
     for suspect_log in skipped_lines:
-        print(f"Suspected line: ", suspect_log)
+        print(f"Suspected line:  {suspect_log}")
 
 
         
 def start_checking():
-    if len(run_arg) != 1:
+    if len(sys.argv) != 2:
         print("Usage: python3 main.py <path_to_log>")
-        sys.exit()
+        sys.exit(1)
     else:
         check_logs(sys.argv[1])
 
