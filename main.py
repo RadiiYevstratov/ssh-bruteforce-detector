@@ -24,10 +24,10 @@ def check_logs(path):
     try:
         logs = open_log(path)
     except FileNotFoundError:
-        print("File doesn't exist. Please try enter right path")
+        print(f"File {path} doesn't exist. Please try enter right path")
         sys.exit(1)
     except PermissionError:
-        print(f"Error: no permission to read {logs}. Try running with sudo.")
+        print(f"Error: no permission to read {path}. Try running with sudo.")
         sys.exit(1)
             
     for row in logs:
