@@ -12,7 +12,7 @@ def open_log(path):
 def get_ip(target_log):
     try:
         return target_log[target_log.index("from") + 1]
-    except ValueError:
+    except (ValueError, IndexError):
         return None
 
 
@@ -23,11 +23,11 @@ def check_logs(path):
     skipped_lines = []
     try:
         logs = open_log(path)
-    except (FileNotFoundError) as e:
-        print(e)
+    except FileNotFoundError:
+        print("File doesn't exist. Please try enter right path")
         sys.exit(1)
-    except (PermissionError) as e:
-        print(e)
+    except PermissionError:
+        print(f"Error: no permission to read {logs}. Try running with sudo.")
         sys.exit(1)
             
     for row in logs:
@@ -37,8 +37,8 @@ def check_logs(path):
                 skipped_lines.append(row)
             else:
                 ip_control(ip, IP_dict)
-    print_result(IP_dict, skipped_lines)
     
+    return (IP_dict, skipped_lines)
 
 def ip_control(ip_, IP_dict):
     if ip_ not in IP_dict:
@@ -60,7 +60,8 @@ def start_checking():
         print("Usage: python3 main.py <path_to_log>")
         sys.exit(1)
     else:
-        check_logs(sys.argv[1])
+        IP_dict, skipped_lines = check_logs(sys.argv[1])
+        print_result(IP_dict, skipped_lines)
 
 start_checking()
 
