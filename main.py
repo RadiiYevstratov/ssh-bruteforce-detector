@@ -1,4 +1,5 @@
 import sys
+import argparse
 
 TARGET = "Failed password"
 
@@ -15,8 +16,6 @@ def get_ip(target_log):
     except (ValueError, IndexError):
         return None
 
-
-    
 
 def check_logs(path):
     IP_dict ={}
@@ -63,5 +62,16 @@ def start_checking():
         IP_dict, skipped_lines = check_logs(sys.argv[1])
         print_result(IP_dict, skipped_lines)
 
+def get_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("path", help="Enter path of your log file", type=str)
+    parser.add_argument("-time", help="Enter period of time in minutes to check logs", type=int, default=5)
+    args = parser.parse_args()
+    start_checking(path = args.path, time = args.time)
+
+    
+
+
+get_args()
 start_checking()
 
