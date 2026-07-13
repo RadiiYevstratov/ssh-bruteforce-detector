@@ -10,8 +10,8 @@ def code_debug():
     path, time, failed_target = get_args()
     IP_dict, skipped = check_logs(path=path)
     result_dict = suspicious_ip(IP_dict, time)
-    sort_result(result_dict=result_dict, failed_target=failed_target)
-
+    final_dict = sort_result(result_dict=result_dict, failed_target=failed_target)
+    print_outcome(final_dict=final_dict, skipped= skipped, time=time, failed_target=failed_target)
 
 def get_args():
     parser = argparse.ArgumentParser()
@@ -109,14 +109,15 @@ def result_save(result_dict, key, failed_attempts, starting_time, finishing_time
 def sort_result(result_dict, failed_target):
     pop_list = []
     for  key, value_list in result_dict.items():
-        print(value_list)
         if value_list[0] < failed_target:
             pop_list.append(key)
     
     for remove_ip in pop_list:
         result_dict.pop(remove_ip)
+
+    result_dict = dict(sorted(result_dict.items(), key=lambda item: item[1][0], reverse=True))
     
-    print(result_dict)
+    return result_dict
 
 def convert_datetime(IP_dict):     
     for  value_list in IP_dict.values():
@@ -124,6 +125,14 @@ def convert_datetime(IP_dict):
             value = datetime.fromisoformat(str(value))
 
     return IP_dict
+
+def print_outcome(final_dict, skipped, time, failed_target):
+    print(f"Test has been done. Settings: Period to check is {time} minutes; Failed target to detect is {failed_target}")
+    for key, values in final_dict.items():
+        print(f"IP: {key} | Failed attemps: {values[0]} | Analyzed since: {datetime.fromisoformat(values[1]).strftime("%d.%m.%Y %H:%M:%S")} to {datetime.fromisoformat(values[2]).strftime("%d.%m.%Y %H:%M:%S")}")
+    
+    for log in skipped:
+        print(log)
 
 code_debug()
 
