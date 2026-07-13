@@ -5,23 +5,18 @@ import json
 TARGET = "Failed password"
 
 
+def code_debug():
+    path, time = get_args()
+    IP_dict, skipped = check_logs(path=path, time=time)
+    print(json.dumps(IP_dict, indent=2))
 
-def open_log(path):
-    with open(path, 'r') as file:
-        return file.readlines()
-    
-
-def get_ip(target_log):
-    try:
-        return target_log[target_log.index("from") + 1]
-    except (ValueError, IndexError):
-        return None
-
-def get_time(target_log):
-    try:
-        return target_log[0]
-    except (ValueError, IndexError):
-        return None
+def get_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("path", help="Enter path of your log file", type=str)
+    parser.add_argument("-t", "--time", help="Enter period of time in minutes to check logs", type=int, default=5)
+    args = parser.parse_args()
+    return args.path, args.time
+    check_ip, skipped= check_logs(path = args.path, time = args.time)
 
 
 def check_logs(path, time):
@@ -48,16 +43,30 @@ def check_logs(path, time):
     return (IP_dict, skipped_lines)
 
 
+def open_log(path):
+    with open(path, 'r') as file:
+        return file.readlines()
+    
+
+def get_ip(target_log):
+    try:
+        return target_log[target_log.index("from") + 1]
+    except (ValueError, IndexError):
+        return None
+
+def get_time(target_log):
+    try:
+        return target_log[0]
+    except (ValueError, IndexError):
+        return None
+
+
 def ip_control(ip_, time, IP_dict):
     if ip_ not in IP_dict:
         IP_dict[ip_] = [time]
     else:
         IP_dict[ip_].append(time)
         IP_dict[ip_].sort()
-
-
-def sort_time(ip_list):
-    ip_list.sort(reversed = True)
 
 
 def print_result(IP_dict, skipped_lines):
@@ -74,17 +83,12 @@ def start_checking(path, time):
     for i in IP_dict:
         print(i)
     # print_result(IP_dict, skipped_lines)
-
-def get_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("path", help="Enter path of your log file", type=str)
-    parser.add_argument("-t", "--time", help="Enter period of time in minutes to check logs", type=int, default=5)
-    args = parser.parse_args()
-    dic, skipped= check_logs(path = args.path, time = args.time)
-    print(json.dumps(dic, indent=2))
     
 
+def suspicious_ip(IP_dict, time):
+    for key in IP_dict.keys:
+        print(key)
 
-get_args()
 
-
+code_debug()
+# suspicious_ip(IP_dict, time)
