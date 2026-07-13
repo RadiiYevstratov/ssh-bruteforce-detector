@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 TARGET = "Failed password"
 
 
-def code_debug():
+def main():
     path, time, failed_target = get_args()
     IP_dict, skipped = check_logs(path=path)
     result_dict = suspicious_ip(IP_dict, time)
@@ -17,7 +17,7 @@ def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("path", help="Enter path of your log file", type=str)
     parser.add_argument("time", help="Enter period of time in minutes to check logs. Default number is 5", type=int, nargs="?", default=5) 
-    parser.add_argument("failed_target", help="Enter how many failed attempt need to be to include to result. Default number is 5", type=int, nargs="?", default=5) 
+    parser.add_argument("failed_target", help="Enter how many failed attempt need to be to include to result. Default number is 5", type=int, nargs="?", default=10) 
     args = parser.parse_args()
     return args.path, args.time, args.failed_target
 
@@ -59,7 +59,8 @@ def get_ip(target_log):
 
 def get_time(target_log):
     try:
-        return target_log[0]
+        time = datetime.fromisoformat(target_log[0])
+        return time
     except (ValueError, IndexError):
         return None
 
@@ -69,47 +70,39 @@ def ip_control(ip_, time, IP_dict):
         IP_dict[ip_] = [time]
     else:
         IP_dict[ip_].append(time)
-        IP_dict[ip_].sort()
+    IP_dict[ip_].sort()
 
-
-def print_result(IP_dict, skipped_lines):
-    for key, value in sorted(IP_dict.items(), key=lambda item: item[1], reverse=True):
-        if value > 5:
-            print(f"IP: {key} | failed attempts: {value}")
-    for suspect_log in skipped_lines:
-        print(f"Suspected line:  {suspect_log}")
     
 
 def suspicious_ip(IP_dict, time):
-    converted_list = convert_datetime(IP_dict)
+    converted_list = IP_dict
     result_dict = {}
     for key in converted_list.keys():
         result_dict[key] = [None, None, None]
 
     for key, time_list in converted_list.items():
         for starting_time in time_list:
-            max_time = datetime.fromisoformat(str(starting_time)) + timedelta(minutes=time)
-            finishing_time = max((finish_time for finish_time in time_list if datetime.fromisoformat(str(finish_time)) < max_time))
-            failed_attempts = len(time_list[time_list.index(starting_time):time_list.index(finishing_time )])
+            max_time = starting_time + timedelta(minutes=time)
+            finishing_time = max((finish_time for finish_time in time_list if finish_time < max_time))
+            failed_attempts = len(time_list[time_list.index(starting_time):time_list.index(finishing_time )]) + 1
             result_dict = result_save(result_dict, key, failed_attempts, starting_time, finishing_time)
 
     return result_dict
 
 def result_save(result_dict, key, failed_attempts, starting_time, finishing_time):
 
-    if result_dict[key][0] == None or result_dict[key][0] < failed_attempts:
+    if result_dict[key][0] is None or result_dict[key][0] < failed_attempts:
         result_dict[key][0] = failed_attempts
         result_dict[key][1] = starting_time
         result_dict[key][2] = finishing_time
-    else:
-        pass
+
     return result_dict
             
 
 def sort_result(result_dict, failed_target):
     pop_list = []
     for  key, value_list in result_dict.items():
-        if value_list[0] < failed_target:
+        if value_list[0] <= failed_target:
             pop_list.append(key)
     
     for remove_ip in pop_list:
@@ -119,22 +112,16 @@ def sort_result(result_dict, failed_target):
     
     return result_dict
 
-def convert_datetime(IP_dict):     
-    for  value_list in IP_dict.values():
-        for value in value_list:
-            value = datetime.fromisoformat(str(value))
-
-    return IP_dict
 
 def print_outcome(final_dict, skipped, time, failed_target):
     print(f"Test has been done. Settings: Period to check is {time} minutes; Failed target to detect is {failed_target}")
     for key, values in final_dict.items():
-        print(f"IP: {key} | Failed attemps: {values[0]} | Analyzed since: {datetime.fromisoformat(values[1]).strftime("%d.%m.%Y %H:%M:%S")} to {datetime.fromisoformat(values[2]).strftime("%d.%m.%Y %H:%M:%S")}")
+        print(f"IP: {key} | Failed attemps: {values[0]} | Analyzed since: {values[1].strftime("%d.%m.%Y %H:%M:%S")} to {values[2].strftime("%d.%m.%Y %H:%M:%S")}")
     
     for log in skipped:
         print(log)
 
-code_debug()
+main()
 
 
 
