@@ -1,14 +1,16 @@
 import sys
 import argparse
 import json
+from datetime import datetime, timedelta
 
 TARGET = "Failed password"
 
 
 def code_debug():
     path, time = get_args()
-    IP_dict, skipped = check_logs(path=path, time=time)
+    IP_dict, skipped = check_logs(path=path)
     print(json.dumps(IP_dict, indent=2))
+    suspicious_ip(IP_dict, time)
 
 def get_args():
     parser = argparse.ArgumentParser()
@@ -16,10 +18,9 @@ def get_args():
     parser.add_argument("-t", "--time", help="Enter period of time in minutes to check logs", type=int, default=5)
     args = parser.parse_args()
     return args.path, args.time
-    check_ip, skipped= check_logs(path = args.path, time = args.time)
 
 
-def check_logs(path, time):
+def check_logs(path):
     IP_dict ={}
     skipped_lines = []
     try:
@@ -75,20 +76,45 @@ def print_result(IP_dict, skipped_lines):
             print(f"IP: {key} | failed attempts: {value}")
     for suspect_log in skipped_lines:
         print(f"Suspected line:  {suspect_log}")
-
-
-        
-def start_checking(path, time):
-    IP_dict, skipped_lines = check_logs(sys.argv[1])
-    for i in IP_dict:
-        print(i)
-    # print_result(IP_dict, skipped_lines)
     
 
 def suspicious_ip(IP_dict, time):
-    for key in IP_dict.keys:
-        print(key)
+    converted_list = convert_datetime(IP_dict)
+    result_dict = {}
+    for key in converted_list.keys():
+        result_dict[key] = [None, None, None]
 
+    for key, time_list in converted_list.items():
+        for starting_time in time_list:
+            max_time = datetime.fromisoformat(str(starting_time)) + timedelta(minutes=time)
+            finishing_time = max((finish_time for finish_time in time_list if datetime.fromisoformat(str(finish_time)) < max_time))
+            failed_attempts = len(time_list[time_list.index(starting_time):time_list.index(finishing_time )])
+            print(failed_attempts, key)
+            result_dict = result_save(result_dict, key, failed_attempts, starting_time, finishing_time)
+
+    print(json.dumps(result_dict, indent=2))
+
+def result_save(result_dict, key, failed_attempts, starting_time, finishing_time):
+
+    if result_dict[key][0] == None or result_dict[key][0] < failed_attempts:
+        result_dict[key][0] = failed_attempts
+        result_dict[key][1] = starting_time
+        result_dict[key][2] = finishing_time
+    else:
+        pass
+    return result_dict
+            
+
+
+def convert_datetime(IP_dict):     
+    for  value_list in IP_dict.values():
+        for value in value_list:
+            value = datetime.fromisoformat(str(value))
+            print(type(value))
+
+    return IP_dict
 
 code_debug()
 # suspicious_ip(IP_dict, time)
+
+
