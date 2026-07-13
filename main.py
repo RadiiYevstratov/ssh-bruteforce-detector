@@ -1,5 +1,6 @@
 import sys
 import argparse
+import json
 
 TARGET = "Failed password"
 
@@ -16,8 +17,14 @@ def get_ip(target_log):
     except (ValueError, IndexError):
         return None
 
+def get_time(target_log):
+    try:
+        return target_log[0]
+    except (ValueError, IndexError):
+        return None
 
-def check_logs(path):
+
+def check_logs(path, time):
     IP_dict ={}
     skipped_lines = []
     try:
@@ -32,18 +39,26 @@ def check_logs(path):
     for row in logs:
         if TARGET in row:
             ip = get_ip(row.split())
+            start_time = get_time(row.split())
             if  ip is None:
                 skipped_lines.append(row)
             else:
-                ip_control(ip, IP_dict)
+                ip_control(ip, start_time, IP_dict)
     
     return (IP_dict, skipped_lines)
 
-def ip_control(ip_, IP_dict):
+
+def ip_control(ip_, time, IP_dict):
     if ip_ not in IP_dict:
-        IP_dict[ip_] = 1
+        IP_dict[ip_] = [time]
     else:
-        IP_dict[ip_] += 1
+        IP_dict[ip_].append(time)
+        IP_dict[ip_].sort()
+
+
+def sort_time(ip_list):
+    ip_list.sort(reversed = True)
+
 
 def print_result(IP_dict, skipped_lines):
     for key, value in sorted(IP_dict.items(), key=lambda item: item[1], reverse=True):
@@ -54,24 +69,22 @@ def print_result(IP_dict, skipped_lines):
 
 
         
-def start_checking():
-    if len(sys.argv) != 2:
-        print("Usage: python3 main.py <path_to_log>")
-        sys.exit(1)
-    else:
-        IP_dict, skipped_lines = check_logs(sys.argv[1])
-        print_result(IP_dict, skipped_lines)
+def start_checking(path, time):
+    IP_dict, skipped_lines = check_logs(sys.argv[1])
+    for i in IP_dict:
+        print(i)
+    # print_result(IP_dict, skipped_lines)
 
 def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("path", help="Enter path of your log file", type=str)
-    parser.add_argument("-time", help="Enter period of time in minutes to check logs", type=int, default=5)
+    parser.add_argument("-t", "--time", help="Enter period of time in minutes to check logs", type=int, default=5)
     args = parser.parse_args()
-    start_checking(path = args.path, time = args.time)
-
+    dic, skipped= check_logs(path = args.path, time = args.time)
+    print(json.dumps(dic, indent=2))
     
 
 
 get_args()
-start_checking()
+
 
