@@ -1,18 +1,43 @@
-This project is coded for checking  Failed logs by finding "Failed password".
-The result is: if one IP had more than 5 failed logs, it will be displayed with amount of unsuccessful tries.
-If there were no IP the line from logs will be written to skipped lines which will be displazed and can be checked.
+## SSH Brute Force Detector (Version 2)
 
-How to run code:
-Usage: python3 main.py <path_to_log>
+This is the second version of the **SSH Brute Force Detector**.
 
-How result supposed to look like:
-IP: 100.10.100.10 | failed attempts: 18
-IP: 200.20.200.20 | failed attempts: 7
-Suspected line:  2026-07-09T10:00:00.000000+02:00 PC_NAME sshd-session[999]: Failed password for invalid user SuperAdmin
-Suspected line:  2026-07-09T10:00:00.000000+02:00 PC_NAME sshd-session[999]: Failed password for invalid user SuperAdmin
-Suspected line:  2026-07-09T10:00:00.000000+02:00 PC_NAME sshd-session[999]: Failed password for invalid user SuperAdmin
-Suspected line:  2026-07-09T10:00:00.000000+02:00 PC_NAME sshd-session[999]: Failed password for invalid user SuperAdmin
-Suspected line:  2026-07-09T10:00:00.000000+02:00 PC_NAME sshd-session[999]: Failed password for invalid user SuperAdmin
-Suspected line:  2026-07-09T10:00:00.000000+02:00 PC_NAME sshd-session[999]: Failed password for invalid user SuperAdmin
+The application analyzes SSH authentication logs and detects potential brute-force attacks by counting failed login attempts from each IP address within a specified time window.
+
+### Features
+
+- Detects failed SSH login attempts per IP address.
+- Configurable time window (default: **10 minutes**).
+- Configurable minimum number of failed attempts required to report an IP address.
+- Reports the time range in which the failed attempts occurred.
+- Counts and displays the number of skipped (invalid) log lines.
+
+## Usage
+
+bash
+python3 main.py <path_to_log> <time_window> <minimum_failed_attempts>
+
+
+### Arguments
+
+| Argument | Description |
+|----------|-------------|
+| `path_to_log` | Path to the SSH log file |
+| `time_window` | Time period (in minutes) to analyze (default: 10) |
+| `minimum_failed_attempts` | Minimum number of failed login attempts required to report an IP |
+
+## Example
+
+python3 main.py auth.log 10 5
+
+
+### Example Output
+
+Test has been done. Settings: Period to check is 10 minutes; Failed target to detect is 5
+IP: 100.10.100.10 | Failed attemps: 14 | Analyzed since: 08.07.2026 23:00:00 to 08.07.2026 23:04:20
+IP: 200.20.200.20 | Failed attemps: 6 | Analyzed since: 08.07.2026 23:02:41 to 08.07.2026 23:03:11
+IP: 210.20.210.20 | Failed attemps: 6 | Analyzed since: 08.07.2026 23:10:00 to 08.07.2026 23:10:20
+Skipped lines: 8
+
 
 
