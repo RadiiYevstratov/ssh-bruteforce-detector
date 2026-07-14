@@ -8,6 +8,7 @@ TARGET = "Failed password"
 def main():
     path, time, failed_target = get_args()
     IP_dict, skipped = check_logs(path=path)
+    IP_dict = sort_list(IP_dict)
     result_dict = suspicious_ip(IP_dict, time)
     final_dict = sort_result(result_dict=result_dict, failed_target=failed_target)
     print_outcome(final_dict=final_dict, skipped= skipped, time=time, failed_target=failed_target)
@@ -15,8 +16,8 @@ def main():
 def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("path", help="Enter path of your log file", type=str)
-    parser.add_argument("time", help="Enter period of time in minutes to check logs. Default number is 5", type=int, nargs="?", default=5) 
-    parser.add_argument("failed_target", help="Enter how many failed attempt need to be to include to result. Default number is 10", type=int, nargs="?", default=10) 
+    parser.add_argument("time", help="Enter period of time in minutes to check logs. Default number is 10", type=int, nargs="?", default=10) 
+    parser.add_argument("failed_target", help="Enter how many failed attempt need to be to include to result. Default number is 5", type=int, nargs="?", default=5) 
     args = parser.parse_args()
     return args.path, args.time, args.failed_target
 
@@ -69,9 +70,12 @@ def ip_control(ip_, time, IP_dict):
         IP_dict[ip_] = [time]
     else:
         IP_dict[ip_].append(time)
-    IP_dict[ip_].sort()
 
+def sort_list(IP_dict):
+    for key, value in IP_dict.items():
+        IP_dict[key].sort()
     
+    return IP_dict
 
 def suspicious_ip(IP_dict, time):
     result_dict = {}
