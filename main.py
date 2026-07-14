@@ -17,7 +17,7 @@ def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("path", help="Enter path of your log file", type=str)
     parser.add_argument("time", help="Enter period of time in minutes to check logs. Default number is 5", type=int, nargs="?", default=5) 
-    parser.add_argument("failed_target", help="Enter how many failed attempt need to be to include to result. Default number is 5", type=int, nargs="?", default=5) 
+    parser.add_argument("failed_target", help="Enter how many failed attempt need to be to include to result. Default number is 10", type=int, nargs="?", default=10) 
     args = parser.parse_args()
     return args.path, args.time, args.failed_target
 
