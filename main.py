@@ -1,22 +1,26 @@
 import sys
+import argparse
+from datetime import datetime, timedelta
 
 TARGET = "Failed password"
 
 
+def main():
+    path, time, failed_target = get_args()
+    IP_dict, skipped = check_logs(path=path)
+    IP_dict = sort_list(IP_dict)
+    result_dict = suspicious_ip(IP_dict, time)
+    final_dict = sort_result(result_dict=result_dict, failed_target=failed_target)
+    print_outcome(final_dict=final_dict, skipped= skipped, time=time, failed_target=failed_target)
 
-def open_log(path):
-    with open(path, 'r') as file:
-        return file.readlines()
-    
+def get_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("path", help="Enter path of your log file", type=str)
+    parser.add_argument("time", help="Enter period of time in minutes to check logs. Default number is 10", type=int, nargs="?", default=10) 
+    parser.add_argument("failed_target", help="Enter how many failed attempt need to be to include to result. Default number is 5", type=int, nargs="?", default=5) 
+    args = parser.parse_args()
+    return args.path, args.time, args.failed_target
 
-def get_ip(target_log):
-    try:
-        return target_log[target_log.index("from") + 1]
-    except (ValueError, IndexError):
-        return None
-
-
-    
 
 def check_logs(path):
     IP_dict ={}
@@ -33,35 +37,99 @@ def check_logs(path):
     for row in logs:
         if TARGET in row:
             ip = get_ip(row.split())
-            if  ip is None:
+            start_time = get_time(row.split())
+            if  ip is None or start_time is None:
                 skipped_lines.append(row)
             else:
-                ip_control(ip, IP_dict)
+                ip_control(ip, start_time, IP_dict)
     
     return (IP_dict, skipped_lines)
 
-def ip_control(ip_, IP_dict):
+
+def open_log(path):
+    with open(path, 'r') as file:
+        return file.readlines()
+    
+
+def get_ip(target_log):
+    try:
+        return target_log[target_log.index("from") + 1]
+    except (ValueError, IndexError):
+        return None
+
+def get_time(target_log):
+    try:
+        time = datetime.fromisoformat(target_log[0])
+        return time
+    except (ValueError, IndexError):
+        return None
+
+
+def ip_control(ip_, time, IP_dict):
     if ip_ not in IP_dict:
-        IP_dict[ip_] = 1
+        IP_dict[ip_] = [time]
     else:
-        IP_dict[ip_] += 1
+        IP_dict[ip_].append(time)
 
-def print_result(IP_dict, skipped_lines):
-    for key, value in sorted(IP_dict.items(), key=lambda item: item[1], reverse=True):
-        if value > 5:
-            print(f"IP: {key} | failed attempts: {value}")
-    for suspect_log in skipped_lines:
-        print(f"Suspected line:  {suspect_log}")
+def sort_list(IP_dict):
+    for key, value in IP_dict.items():
+        IP_dict[key].sort()
+    
+    return IP_dict
+
+def suspicious_ip(IP_dict, time):
+    result_dict = {}
+    for key in IP_dict.keys():
+        result_dict[key] = [None, None, None]
+
+    for key, time_list in IP_dict.items():
+        for i, starting_time in enumerate(time_list):
+            j = i
+            max_time = None
+            failed_attempts = 0
+            finishing_time = starting_time + timedelta(minutes=time)
+            while j < len(time_list) and time_list[j] < finishing_time:
+                failed_attempts += 1
+                if max_time is None or time_list[j] > max_time:
+                    max_time = time_list[j]
+                j+= 1
+                
+            result_dict = result_save(result_dict, key, failed_attempts, starting_time, max_time)
+
+    return result_dict
+
+def result_save(result_dict, key, failed_attempts, starting_time, finishing_time):
+
+    if result_dict[key][0] is None or result_dict[key][0] < failed_attempts:
+        result_dict[key][0] = failed_attempts
+        result_dict[key][1] = starting_time
+        result_dict[key][2] = finishing_time
+
+    return result_dict
+            
+
+def sort_result(result_dict, failed_target):
+    pop_list = []
+    for  key, value_list in result_dict.items():
+        if value_list[0] <= failed_target:
+            pop_list.append(key)
+    
+    for remove_ip in pop_list:
+        result_dict.pop(remove_ip)
+
+    result_dict = dict(sorted(result_dict.items(), key=lambda item: item[1][0], reverse=True))
+    
+    return result_dict
 
 
-        
-def start_checking():
-    if len(sys.argv) != 2:
-        print("Usage: python3 main.py <path_to_log>")
-        sys.exit(1)
-    else:
-        IP_dict, skipped_lines = check_logs(sys.argv[1])
-        print_result(IP_dict, skipped_lines)
+def print_outcome(final_dict, skipped, time, failed_target):
+    print(f"Test has been done. Settings: Period to check is {time} minutes; Failed target to detect is {failed_target}")
+    for key, values in final_dict.items():
+        print(f"IP: {key} | Failed attemps: {values[0]} | Analyzed since: {values[1].strftime("%d.%m.%Y %H:%M:%S")} to {values[2].strftime("%d.%m.%Y %H:%M:%S")}")
 
-start_checking()
+    print(f"Skipped lines: {len(skipped)}")
+
+main()
+
+
 
