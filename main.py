@@ -17,7 +17,7 @@ def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("path", help="Enter path of your log file", type=str)
     parser.add_argument("time", help="Enter period of time in minutes to check logs. Default number is 5", type=int, nargs="?", default=5) 
-    parser.add_argument("failed_target", help="Enter how many failed attempt need to be to include to result. Default number is 5", type=int, nargs="?", default=10) 
+    parser.add_argument("failed_target", help="Enter how many failed attempt need to be to include to result. Default number is 5", type=int, nargs="?", default=5) 
     args = parser.parse_args()
     return args.path, args.time, args.failed_target
 
@@ -38,7 +38,7 @@ def check_logs(path):
         if TARGET in row:
             ip = get_ip(row.split())
             start_time = get_time(row.split())
-            if  ip is None:
+            if  ip is None or start_time is None:
                 skipped_lines.append(row)
             else:
                 ip_control(ip, start_time, IP_dict)
