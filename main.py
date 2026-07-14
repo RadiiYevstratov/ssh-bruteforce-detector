@@ -1,6 +1,5 @@
 import sys
 import argparse
-import json
 from datetime import datetime, timedelta
 
 TARGET = "Failed password"
@@ -75,12 +74,11 @@ def ip_control(ip_, time, IP_dict):
     
 
 def suspicious_ip(IP_dict, time):
-    converted_list = IP_dict
     result_dict = {}
-    for key in converted_list.keys():
+    for key in IP_dict.keys():
         result_dict[key] = [None, None, None]
 
-    for key, time_list in converted_list.items():
+    for key, time_list in IP_dict.items():
         for i, starting_time in enumerate(time_list):
             j = i
             max_time = None
