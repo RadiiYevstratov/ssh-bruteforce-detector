@@ -81,7 +81,7 @@ def suspicious_ip(IP_dict, time):
         result_dict[key] = [None, None, None]
 
     for key, time_list in converted_list.items():
-        for starting_time in time_list:
+        for i, starting_time in enumerate(time_list):
             max_time = starting_time + timedelta(minutes=time)
             finishing_time = max((finish_time for finish_time in time_list if finish_time < max_time))
             failed_attempts = len(time_list[time_list.index(starting_time):time_list.index(finishing_time )]) + 1
@@ -118,8 +118,7 @@ def print_outcome(final_dict, skipped, time, failed_target):
     for key, values in final_dict.items():
         print(f"IP: {key} | Failed attemps: {values[0]} | Analyzed since: {values[1].strftime("%d.%m.%Y %H:%M:%S")} to {values[2].strftime("%d.%m.%Y %H:%M:%S")}")
     
-    for log in skipped:
-        print(log)
+    print(f"Skipped lines: {len(skipped)}")
 
 main()
 
